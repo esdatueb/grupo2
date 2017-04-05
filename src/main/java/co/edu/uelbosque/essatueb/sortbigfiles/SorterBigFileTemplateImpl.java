@@ -6,6 +6,7 @@ package co.edu.uelbosque.essatueb.sortbigfiles;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +75,33 @@ public class SorterBigFileTemplateImpl extends SorterBigFileTemplate{
 
     @Override
     protected File mergeFiles(File file1, File file2) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        try{
+            File fileMerge = new File(this.outPutDir+"/FileMerge.txt");
+            FileWriter fw=new FileWriter(fileMerge); 
+            FileReader fr1 = new FileReader(file1);
+            BufferedReader br1 = new BufferedReader(fr1);
+            String linea = br1.readLine();
+            while(linea != null){
+                fw.write(linea+"\n");
+                linea = br1.readLine();
+            }
+            br1.close();
+            fr1.close();
+            FileReader fr2 = new FileReader(file2);
+            BufferedReader br2 = new BufferedReader(fr2);
+            String linea2 = br2.readLine();
+            while(linea2 != null){
+                fw.write(linea2+"\n");
+                linea2 = br2.readLine();
+            }
+            br2.close();
+            fr2.close();
+            fw.close();
+            return fileMerge;
+        }catch(IOException ioe){
+             ioe.printStackTrace();
+        }
+        return null;
     }
 
     @Override
